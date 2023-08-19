@@ -132,7 +132,7 @@ view_signals(View * view)
 static void
 view_setup(View * view)
 {
-    gtk_widget_show(view->ui);
+    gtk_widget_set_visible(view->ui, true);
 }
 
 
@@ -144,6 +144,7 @@ view_drawing_callback(
     , int height
     , gpointer param)
 {
+    (void) area;
     GameState * game_state = param;
 
     double cell_width  = 
@@ -177,26 +178,28 @@ view_draw_game_state(
     {
         switch(game_state->game_field[i])
         {
-            case CellX:
-                view_draw_cross(
-                    game_state->state == GSPlayerOWin 
-                    || game_state->state == GSIndecisively
-                    ,i%GAME_FIELD_COLUMN * cell_width
-                    , i/GAME_FIELD_ROW * cell_height
-                    , cell_width
-                    , cell_height
-                    , cr);
-                break;
-            case CellO:
-                view_draw_circle(
-                    game_state->state == GSPlayerXWin
-                    || game_state->state == GSIndecisively
-                    , i%GAME_FIELD_COLUMN * cell_width
-                    , i/GAME_FIELD_ROW * cell_height
-                    , cell_width
-                    , cell_height
-                    , cr);
-                break;
+        case CellX:
+            view_draw_cross(
+                game_state->state == GSPlayerOWin 
+                || game_state->state == GSIndecisively
+                , i%GAME_FIELD_COLUMN * cell_width
+                , i/GAME_FIELD_ROW * cell_height
+                , cell_width
+                , cell_height
+                , cr);
+            break;
+        case CellO:
+            view_draw_circle(
+                game_state->state == GSPlayerXWin
+                || game_state->state == GSIndecisively
+                , i%GAME_FIELD_COLUMN * cell_width
+                , i/GAME_FIELD_ROW * cell_height
+                , cell_width
+                , cell_height
+                , cr);
+            break;
+        case CellEmpty:
+            break;
         }    
     }
 }
@@ -315,6 +318,8 @@ view_click_callback(
     , double y
     , gpointer param)
 {
+    (void) gesture;
+
     if(n_press >=2)
     {
         View * view = param;
@@ -331,6 +336,8 @@ view_click_callback(
 static void
 view_finalize(GtkWidget * widget, View * view)
 {
+    (void) widget;
+
     if(view != NULL)
         free(view);
 }

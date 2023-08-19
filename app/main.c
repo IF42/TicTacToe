@@ -11,8 +11,8 @@ main(int argc, char ** argv)
 {
     GtkApplication * application = 
         gtk_application_new( 
-             "edit.training.tictactoe"
-             , G_APPLICATION_FLAGS_NONE);
+             "IF42.training.tictactoe"
+             , G_APPLICATION_DEFAULT_FLAGS);
 
     GameState * game_state = game_state_new();
     

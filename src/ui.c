@@ -13,28 +13,52 @@ struct _UiWidget
 G_DEFINE_TYPE(UiWidget, ui_widget, GTK_TYPE_WINDOW)
 
 
-static void
-ui_widget_init(UiWidget * ui);
-
 
 static void
-ui_widget_class_init(UiWidgetClass * class);
+ui_widget_init(UiWidget * ui)
+{
+	(void) ui;
+}
+
+static void
+ui_widget_class_init(UiWidgetClass * class)
+{
+	(void) class;
+}
 
 
 static void
-ui_widget_build(UiWidget * ui);
+ui_widget_pack(UiWidget * ui)
+{
+    gtk_window_set_child(
+          GTK_WINDOW(ui)
+          , ui->drawing);
+}
+
+
+static void
+ui_widget_build(UiWidget * ui)
+{
+    ui->drawing = gtk_drawing_area_new();
+}
 
 
 static void 
-ui_widget_setup(UiWidget * ui);
-
-
+ui_widget_setup(UiWidget * ui)
+{
+    gtk_window_set_default_size(
+        GTK_WINDOW(ui), 
+        800, 
+        800);
+    
+    gtk_window_set_resizable(GTK_WINDOW(ui), false);
+}
 static void
-ui_widget_pack(UiWidget * ui);
+ui_widget_signals(UiWidget * ui)
+{
+	(void) ui;
+}
 
-
-static void
-ui_widget_signals(UiWidget * ui);
 
 
 GtkWidget *
@@ -76,49 +100,4 @@ ui_widget_set_drawing_callback(
 }
 
 
-static void
-ui_widget_build(UiWidget * ui)
-{
-    ui->drawing = gtk_drawing_area_new();
-}
-
-
-static void 
-ui_widget_setup(UiWidget * ui)
-{
-    gtk_window_set_default_size(
-        GTK_WINDOW(ui), 
-        800, 
-        800);
-    
-    gtk_window_set_resizable(GTK_WINDOW(ui), false);
-}
-
-
-static void
-ui_widget_pack(UiWidget * ui)
-{
-    gtk_window_set_child(
-          GTK_WINDOW(ui)
-          , ui->drawing);
-}
-
-
-static void
-ui_widget_signals(UiWidget * ui)
-{
-}
-
-
-static void
-ui_widget_init(UiWidget * ui)
-{
-
-}
-
-static void
-ui_widget_class_init(UiWidgetClass * class)
-{
-
-}
 
